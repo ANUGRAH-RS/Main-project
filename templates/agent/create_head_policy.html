@@ -1,0 +1,84 @@
+
+{% extends 'agent/agent_lay.html' %}
+
+
+{% block content %}
+
+
+    <style>
+        h2 {
+            color: #1e3c72;
+        }
+        input, textarea, select {
+            width: 90%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        button {
+            width: 10%;
+            padding: 10px;
+            background: #1e3c72;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #2a5298;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h4>Create Main Policy</h4>
+        {% if messages %}
+            {% for message in messages %}
+                <p class="error">{{ message }}</p>
+            {% endfor %}
+        {% endif %}
+
+        <form method="POST">
+            {% csrf_token %}
+            <input type="text" name="policy_name" placeholder="Policy Name" required>
+            <button type="submit">Save</button>
+        </form>
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">Policy List</div>
+                </div>
+                <div class="card-body">
+                    <table class="table table-striped mt-3">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Main Policy Name</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for policy in head_policies %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td>{{ policy.polcy_name }}</td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="6" class="text-center">No policies found</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

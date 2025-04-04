@@ -1,0 +1,26 @@
+{% extends 'user/user_lay.html' %}
+{% block content %}
+<div class="container mt-5" style="margin-top: 7%;">
+    <h3 class="text-center"><b style="color: rgb(4, 4, 59);">Policy Details</b></h3>
+    <table class="table table-bordered">
+        <tr><th>Policy Name</th><td>{{ policy.policy.polcy_name }}</td></tr>
+        <tr><th>Duration</th><td>{{ policy.duration_years }} Years</td></tr>
+        <tr><th>Total Amount</th><td>₹{{ policy.total_amount }}</td></tr>
+        <tr><th>Monthly Premium</th><td>₹{{ policy.monthly_premium }}</td></tr>
+        <tr><th>Start Date</th><td>{{ policy.start_date }}</td></tr>
+        <tr><th>Expiry Date</th><td>{{ policy.expiry_date }}</td></tr>
+        <tr><th>Nominee</th><td>{{ policy.nominee_name }}</td></tr>
+        <tr><th>Relation</th><td>{{ policy.nominee_relation }}</td></tr>
+        <tr><th>Address</th><td>{{ policy.address }}</td></tr>
+        <tr><th>Phone</th><td>{{ policy.phone_number }}</td></tr>
+        <tr><th>Payment Status</th><td>
+            {% if policy.payment_status %}
+                <span class="badge badge-success">Paid</span>
+            {% else %}
+                <span class="badge badge-danger">Pending</span>
+            {% endif %}
+        </td></tr>
+    </table>
+    <a href="{% url 'purchase_list_user' %}" class="btn btn-secondary">Back</a>
+</div>
+{% endblock %}

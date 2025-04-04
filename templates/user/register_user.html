@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Registration | LIC</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 400px;
+            text-align: center;
+        }
+        h2 {
+            color: #1e3c72;
+        }
+        input {
+            width: 90%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        .error {
+            color: red;
+            font-size: 14px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background: #1e3c72;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #2a5298;
+        }
+    </style>
+    <script>
+        function checkUsername() {
+            var username = document.getElementById("username").value;
+            fetch(`/check-username/?username=${username}`)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById("usernameError").innerText = data.exists ? "Username already exists!" : "";
+                });
+        }
+
+        function checkEmail() {
+            var email = document.getElementById("email").value;
+            fetch(`/check-email/?email=${email}`)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById("emailError").innerText = data.exists ? "Email already exists!" : "";
+                });
+        }
+
+        function validatePasswords() {
+            var pass1 = document.getElementById("password1").value;
+            var pass2 = document.getElementById("password2").value;
+            document.getElementById("passwordError").innerText = pass1 !== pass2 ? "Passwords do not match!" : "";
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h2>User Registration</h2>
+        {% if messages %}
+            {% for message in messages %}
+                <p class="error">{{ message }}</p>
+            {% endfor %}
+        {% endif %}
+
+        <form method="POST">
+            {% csrf_token %}
+            <input type="text" id="username" name="username" placeholder="Username" onkeyup="checkUsername()" required>
+            <span class="error" id="usernameError"></span>
+
+            <input type="email" id="email" name="email" placeholder="Email" onkeyup="checkEmail()" required>
+            <span class="error" id="emailError"></span>
+
+            <input type="password" id="password1" name="password1" placeholder="Password" required>
+            <input type="password" id="password2" name="password2" placeholder="Confirm Password" onkeyup="validatePasswords()" required>
+            <span class="error" id="passwordError"></span>
+
+            <input type="text" name="address" placeholder="Address" required>
+            <input type="tel" id="mobile" name="mobile" placeholder="Mobile" required>
+            <span id="error-msg" style="color: red;"></span>
+
+
+            <button type="submit">Register</button>
+        </form>
+    </div>
+</body>
+</html>
+
+
+
+<script>
+    document.getElementById("mobile").addEventListener("input", function() {
+        let mobile = this.value;
+        let errorMsg = document.getElementById("error-msg");
+    
+        if (!/^\d{10}$/.test(mobile)) {
+            errorMsg.textContent = "Enter a valid 10-digit mobile number";
+        } else {
+            errorMsg.textContent = "";
+        }
+    });
+
+</script>

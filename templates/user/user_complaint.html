@@ -1,0 +1,130 @@
+{% extends 'user/user_lay.html' %}
+{% load static %}
+
+{% block content %}
+
+
+<div class="complaints-container" id="complaints" style="margin-top: 12%;">
+
+    <h4 class="complaints-title">Your Complaints</h4>
+
+    <div class="complaints-list">
+        {% if complaints %}
+            {% for complaint in complaints %}
+                <div class="complaint-card">
+                    <p><strong>📝 Message:</strong> {{ complaint.message }}</p>
+                    <p><strong>💬 Reply:</strong> {{ complaint.reply|default:"No reply yet" }}</p>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p class="no-complaints">No complaints yet.</p>
+        {% endif %}
+    </div>
+
+    <h5 class="submit-title">Submit a Complaint</h5>
+    <form method="post" class="complaint-form">
+        {% csrf_token %}
+        <textarea name="message" placeholder="Enter your complaint..." required></textarea>
+        <button type="submit">Submit</button>
+    </form>
+</div>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f9;
+        margin: 0;
+        padding: 0;
+    }
+
+    .complaints-container {
+        max-width: 800px;
+        margin: 30px auto;
+        background-color: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+    }
+
+    .complaints-title,
+    .submit-title {
+        text-align: center;
+        margin-bottom: 20px;
+        color: #333;
+        font-weight: bold;
+        font-size: 1.8em;
+    }
+
+    .complaints-list {
+        margin-bottom: 20px;
+    }
+
+    .complaint-card {
+        background-color: #f9f9f9;
+        margin-bottom: 15px;
+        padding: 15px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .complaint-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .complaint-card p {
+        margin: 8px 0;
+        color: #555;
+        line-height: 1.6;
+    }
+
+    .no-complaints {
+        text-align: center;
+        color: #888;
+        margin-top: 20px;
+        font-size: 1.1em;
+    }
+
+    .complaint-form {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .complaint-form textarea {
+        width: 100%;
+        height: 120px;
+        padding: 10px;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+        resize: none;
+        font-size: 14px;
+        transition: border-color 0.3s, box-shadow 0.3s;
+    }
+
+    .complaint-form textarea:focus {
+        outline: none;
+        border-color: #007bff;
+        box-shadow: 0 0 6px rgba(0, 123, 255, 0.3);
+    }
+
+    .complaint-form button {
+        width: 100%;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        padding: 12px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: bold;
+        font-size: 1em;
+        transition: background-color 0.3s, box-shadow 0.3s;
+    }
+
+    .complaint-form button:hover {
+        background-color: #0056b3;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+</style>
+{% endblock %}
+

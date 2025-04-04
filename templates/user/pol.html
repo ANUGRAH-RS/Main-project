@@ -1,0 +1,52 @@
+{% extends 'user/user_lay.html' %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+<div class="container mt-4" style="margin-top: 10%;">
+    <h1 class="text-center" style="color: #002F6C;"><b>LIC Policies</b></h1>
+    <div class="row mt-4">
+        {% for policy in policies %}
+            <div class="col-md-4 mb-4">
+                <!-- Main Policy Card -->
+                <div class="card shadow-lg" style="border-color: #FFC107; background-color: #002F6C; color: white;">
+                    <div class="card-body">
+                        <!-- Main Policy Name (Clickable for Collapse) -->
+                        <h5 class="card-title" style="color: #FFC107; cursor: pointer; text-align: center; margin-top: 35px;" 
+                            data-bs-toggle="collapse" data-bs-target="#collapse{{ policy.id }}">
+                            <br>{{ policy.polcy_name }}
+                            <i class="fas fa-chevron-down" style="color: #FFC107;"></i>
+                        </h5><br>
+
+                        <!-- Collapsible Sub-Policies -->
+                        <div id="collapse{{ policy.id }}" class="collapse">
+                            {% with sub_policies=policy.sub_policies.all %}
+                                {% if sub_policies %}
+                                    <h6 class="mt-3" style="color: #FFC107; margin-left: 4%;">Sub Policies:</h6>
+                                    <ul class="list-group" style="background-color: #002F6C; border-color: #FFC107;">
+                                        {% for sub in sub_policies %}
+                                            <li class="list-group-item d-flex justify-content-between align-items-center"
+                                                style="background-color: #002F6C; color: white; border-color: #FFC107;">
+                                                {{ sub.polcy_name }}
+                                                <a href="{% url 'sub_policy_details' sub.id %}" class="text-warning" title="View Details">
+                                                    <i class="fas fa-eye"></i>
+                                                </a>
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                    
+                                {% else %}
+                                    <p class="text-warning mt-2">No sub policies available</p>
+                                {% endif %}
+                            {% endwith %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- Bootstrap 5 CSS & JS for Collapse functionality -->
+{% endblock %}

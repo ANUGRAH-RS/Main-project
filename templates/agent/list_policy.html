@@ -1,0 +1,42 @@
+{% extends 'agent/agent_lay.html' %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title">Policy List</div>
+            </div>
+            <div class="card-body">
+                <table class="table table-striped mt-3">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Policy Name</th>
+                            <th scope="col">Type</th>
+                            <th scope="col">Premium Amount</th>
+                            <th scope="col">Duration (Months)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for policy in policies %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ policy.name }}</td>
+                            <td>{{ policy.policy_type }}</td>
+                            <td>{{ policy.premium_amount }}</td>
+                            <td>{{ policy.duration_months }}</td>
+
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="6" class="text-center">No policies found</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

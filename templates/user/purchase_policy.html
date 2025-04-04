@@ -1,0 +1,40 @@
+{% extends 'user/user_lay.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+    <h2 class="text-center mt-4">Confirm Your Purchase</h2>
+
+    {% if policy %}
+    <div class="card mt-3">
+        <div class="card-body">
+            <h5 class="card-title">{{ policy.name }}</h5>
+            <p><strong>Type:</strong> {{ policy.get_policy_type_display }}</p>
+            <p><strong>Description:</strong> {{ policy.description }}</p>
+            <p><strong>Premium Amount:</strong> ${{ policy.premium_amount }}</p>
+            <p><strong>Duration:</strong> {{ policy.duration_months }} months</p>
+            
+            <form method="POST">
+                {% csrf_token %}
+                
+                <!-- Hidden policy ID to prevent user modification -->
+                <input type="hidden" name="policy_id" value="{{ policy.id }}">
+
+                <!-- Displaying Amount Paid as read-only -->
+                <div class="mb-3">
+                    <label for="amount_paid" class="form-label"><strong>Amount Paid:</strong></label>
+                    <input type="text" name="amount_paid" id="amount_paid" 
+                           value="{{ policy.premium_amount }}" readonly 
+                           class="form-control">
+                </div>
+
+                <button type="submit" class="btn btn-success w-100">Confirm Purchase</button>
+                <a href="{% url 'purchase_policy_page' %}" class="btn btn-secondary w-100 mt-2">Cancel</a>
+            </form>
+        </div>
+    </div>
+    {% else %}
+    <p class="text-center text-danger">No policy selected.</p>
+    {% endif %}
+</div>
+{% endblock %}

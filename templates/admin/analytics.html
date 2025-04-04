@@ -1,0 +1,50 @@
+{% extends 'admin/admin_lay.html' %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analytics Dashboard</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        body { font-family: Arial, sans-serif; }
+        .box { padding: 20px; margin: 10px; background-color: #f8f9fa; border-radius: 8px; box-shadow: 0 0 15px rgba(0,0,0,0.1); }
+        .box h3 { font-size: 1.5rem; }
+        .box-header { background-color: #343a40; color: white; padding: 10px; border-radius: 5px 5px 0 0; }
+        .box-footer { background-color: #f1f1f1; text-align: center; padding: 10px; border-radius: 0 0 5px 5px; }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h2 class="text-center mb-4">Analytics Dashboard</h2><br>
+
+        {% if request.user.role == 1 %}
+            <div class="box">
+                <div class="box-header">
+                    <h3>Total Policies Sold</h3>
+                </div>
+                <div class="box-body" style="margin-top: 3%;">
+                    <p><strong>Total Policies Sold:</strong> {{ total_policies }}</p>
+                    <p><strong>Total Claims:</strong> {{ total_claims }}</p>
+                    <p><strong>Claim Approval Rate:</strong> {{ claim_approval_rate|floatformat:2 }}%</p>
+                </div>
+            </div>
+        {% elif request.user.role == 3 %}
+            <div class="box">
+                <div class="box-header">
+                    <h3>Your Policies</h3>
+                </div>
+                <div class="box-body">
+                    <p><strong>Your Policies:</strong> {{ user_policies }}</p>
+                    <p><strong>Your Claims:</strong> {{ user_claims }}</p>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+{% endblock %}

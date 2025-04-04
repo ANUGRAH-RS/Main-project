@@ -1,0 +1,65 @@
+{% extends 'user/user_lay.html' %}
+{% load static %}
+
+{% block content %}
+
+
+<div class="container mt-4" style="margin-top: 7%;">
+    <h2>My Claim Reports</h2>
+
+    <div class="card mt-3">
+        <div class="card-header">
+            <i class="fas fa-file-alt"></i> My Claims
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Claim ID</th>
+                            <th>Policy Name</th>
+                            <th>Plan No</th>
+                            <th>UIN No</th>
+                            <th>Claim Amount</th>
+                            <th>Monthly Premium</th>
+                            <th>Reason</th>
+                            <th>Status</th>
+                            <th>Created At</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for claim in claims %}
+                        <tr>
+                            <td>{{ claim.id }}</td>
+                            <td>{{ claim.policy.policy.polcy_name }}</td>
+                            <td>{{ claim.plan_no }}</td>
+                            <td>{{ claim.uin_no }}</td>
+                            <td>₹{{ claim.claim_amount }}</td>
+                            <td>₹{{ claim.monthly_premium }}</td>
+                            <td>{{ claim.reason|truncatechars:50 }}</td>
+                            <td>
+                                <span style="
+                                    padding: 5px 10px; 
+                                    border-radius: 5px; 
+                                    color: white; 
+                                    {% if claim.status == 'Approved' %} background-color: green; 
+                                    {% elif claim.status == 'Rejected' %} background-color: red; 
+                                    {% else %} background-color: orange; {% endif %}
+                                ">
+                                    {{ claim.status }}
+                                </span>
+                            </td>                            
+                            <td>{{ claim.created_at|date:"Y-m-d H:i" }}</td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="9" class="text-center">No claims found.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

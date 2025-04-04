@@ -1,0 +1,53 @@
+{% extends 'user/user_lay.html' %}
+{% load static %}
+{% block content %}
+
+<div class="container mt-5" style="margin-top: 10%;">
+    <div class="card shadow-lg">
+        <div class="card-header bg-primary text-white">
+            <h4 class="text-center">Renew Policy - {{ old_purchase.policy.polcy_name }}</h4>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>Current Policy Details</h5>
+                    <p><strong>Policy Name:</strong> {{ old_purchase.policy.polcy_name }}</p>
+                    <p><strong>Duration:</strong> {{ old_purchase.duration_years }} years</p>
+                    <p><strong>Current Expiry:</strong> {{ old_purchase.expiry_date }}</p>
+                    <p><strong>Premium:</strong> ₹{{ old_purchase.monthly_premium }}/month</p>
+                </div>
+                <div class="col-md-6">
+                    <h5>Renewal Details</h5>
+                    <p><strong>New Start Date:</strong> {{ new_start_date }}</p>
+                    <p><strong>New Expiry Date:</strong> {{ new_expiry_date }}</p>
+                    <p><strong>Total Amount:</strong> ₹{{ old_purchase.total_amount }}</p>
+                </div>
+            </div>
+            
+            <hr>
+            
+            <form method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="agreeTerms" required>
+                        <label class="form-check-label" for="agreeTerms">
+                            I agree to the terms and conditions
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="form-group mt-4 text-center">
+                    <button type="submit" class="btn btn-primary btn-lg">
+                        <i class="fas fa-sync-alt"></i> Confirm Renewal
+                    </button>
+                    <a href="{% url 'purchase_list_user' %}" class="btn btn-secondary btn-lg">
+                        <i class="fas fa-times"></i> Cancel
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

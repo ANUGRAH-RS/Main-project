@@ -1,0 +1,94 @@
+{% extends 'agent/agent_lay.html' %}
+
+{% block content %}
+
+    <style>
+        h4 {
+            color: #1e3c72;
+        }
+        input, select {
+            width: 90%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        button {
+            width: 10%;
+            padding: 10px;
+            background: #1e3c72;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #2a5298;
+        }
+    </style>
+
+    <div class="container">
+        <h4>Create Policy Plan</h4>
+
+        {% if messages %}
+            {% for message in messages %}
+                <p class="error">{{ message }}</p>
+            {% endfor %}
+        {% endif %}
+
+        <form method="POST">
+            {% csrf_token %}
+            <select name="sub_policy" required>
+                <option value="">Select Sub Policy</option>
+                {% for policy in sub_policies %}
+                    <option value="{{ policy.id }}">{{ policy.polcy_name }}</option>
+                {% endfor %}
+            </select>
+            <input type="number" name="duration" placeholder="Duration (Years)" required>
+            <input type="text" name="total_amount" placeholder="Total Amount (₹)" required>
+            <input type="text" name="monthly_premium" placeholder="Monthly Premium (₹)" required>
+            <button type="submit">Save</button>
+        </form>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">Policy Plans</div>
+                </div>
+                <div class="card-body">
+                    <table class="table table-striped mt-3">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Sub Policy Name</th>
+                                <th>Duration (Years)</th>
+                                <th>Total Amount (₹)</th>
+                                <th>Monthly Premium (₹)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for plan in policy_plans %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td>{{ plan.policy.polcy_name }}</td>
+                                <td>{{ plan.duration_years }}</td>
+                                <td>₹{{ plan.total_amount }}</td>
+                                <td>₹{{ plan.monthly_premium }}</td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="5" class="text-center">No plans found</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

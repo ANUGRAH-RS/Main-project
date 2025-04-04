@@ -1,0 +1,68 @@
+{% extends 'user/user_lay.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-4" style="margin-top: 10%;">
+    <h2 class="text-center" style="color: #002F6C;"><b>{{ sub_policy.polcy_name }} Details</b></h2>
+    
+    <table class="table table-bordered mt-4">
+        <thead class="thead-dark">
+            <tr>
+                <th>Plan No</th>
+                <th>UIN No</th>
+                <th>PDF</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for detail in details %}
+                <tr>
+                    <td>{{ detail.plan_no }}</td>
+                    <td>{{ detail.uin_no }}</td>
+                    <td>
+                        {% if detail.pdf %}
+                            <a href="{{ detail.pdf.url }}" target="_blank" class="btn btn-sm btn-warning">
+                                View PDF
+                            </a>
+                        {% else %}
+                            No PDF
+                        {% endif %}
+                    </td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="3" class="text-center text-warning">No details available for this sub-policy.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h3 class="mt-4 text-center" style="color: #002F6C;"><b>Policy Plans</b></h3>
+    <table class="table table-bordered mt-3">
+        <thead class="thead-dark">
+            <tr>
+                <th>Duration (Years)</th>
+                <th>Total Amount (₹)</th>
+                <th>Monthly Premium (₹)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for plan in policy_plans %}
+                <tr>
+                    <td>{{ plan.duration_years }}</td>
+                    <td>₹{{ plan.total_amount }}</td>
+                    <td>₹{{ plan.monthly_premium }}</td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="3" class="text-center text-warning">No policy plans available.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{% url 'pol' %}" class="btn btn-primary mt-3">Back to Policies</a>
+    <a href="{% url 'buy_policy' sub_policy.id %}" class="btn btn-lg btn-warning">Buy Now</a>
+
+
+</div>
+{% endblock %}

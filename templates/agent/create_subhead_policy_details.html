@@ -1,0 +1,104 @@
+{% extends 'agent/agent_lay.html' %}
+
+{% block content %}
+
+<style>
+    h2 {
+        color: #1e3c72;
+    }
+    input, textarea, select {
+        width: 90%;
+        padding: 10px;
+        margin: 10px 0;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 16px;
+    }
+    button {
+        width: 10%;
+        padding: 10px;
+        background: #1e3c72;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+    }
+    button:hover {
+        background: #2a5298;
+    }
+</style>
+
+<div class="container">
+    <h4>Add Policy Detail</h4>
+
+    {% if messages %}
+        {% for message in messages %}
+            <p class="error">{{ message }}</p>
+        {% endfor %}
+    {% endif %}
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        
+        <input type="text" name="plan_no" placeholder="Enter Plan Number" required>
+        <input type="text" name="uin_no" placeholder="Enter UIN Number" required>
+
+        <select name="sub_policy" required>
+            <option value="">-- Select Sub Policy --</option>
+            {% for sub_policy in sub_policies %}
+                <option value="{{ sub_policy.id }}">{{ sub_policy.polcy_name }}</option>
+            {% endfor %}
+        </select>
+
+        <input type="file" name="pdf" accept=".pdf">
+        <button type="submit">Save</button>
+    </form>
+</div>
+
+<!-- Policy List Table -->
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title">Policy List</div>
+            </div>
+            <div class="card-body">
+                <table class="table table-striped mt-3">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Plan Number</th>
+                            <th scope="col">UIN Number</th>
+                            <th scope="col">Sub Policy Name</th>
+                            <th scope="col">Policy PDF</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for policy in policies %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ policy.plan_no }}</td>
+                            <td>{{ policy.uin_no }}</td>
+                            <td>{{ policy.sub_policy.polcy_name }}</td>
+                            <td>
+                                {% if policy.pdf %}
+                                    <a href="{{ policy.pdf.url }}" target="_blank" class="btn btn-sm btn-success">View PDF</a>
+                                {% else %}
+                                    No PDF Uploaded
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="5" class="text-center">No policies found</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

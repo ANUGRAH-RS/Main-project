@@ -1,0 +1,39 @@
+{% extends 'user/user_lay.html' %}
+{% block content %}
+<div id="page-content" style="margin-top: 180px;">
+    <div class="container d-flex justify-content-center">
+        <div class="get-quote-form" style="max-width: 500px; width: 100%; padding: 20px; border-radius: 5px;
+        margin-left: 27%;">
+            <h2 style="text-align: center;">Create Your Profile</h2>
+            <form method="post" enctype="multipart/form-data" style="border: 1px solid  #00b2ce;">
+                {% csrf_token %}
+
+                <div class="mb-3">
+                    <input type="text" name="address" placeholder="Address" required class="form-control" style="border: 1px solid  rgb(124, 123, 123);" />
+                </div>
+
+                <div class="mb-3">
+                    <input type="text" name="mobile" placeholder="Mobile Number" required class="form-control" style="border: 1px solid  rgb(124, 123, 123);" />
+                </div>
+
+                <div class="mb-3">
+                    <input type="text" name="city" placeholder="City" required class="form-control" style="border: 1px solid  rgb(124, 123, 123);" />
+                </div>
+
+                <div class="mb-3">
+                    <input type="text" name="country" placeholder="Country" required class="form-control" style="border: 1px solid rgb(124, 123, 123);" />
+                </div>
+
+                <div class="mb-3">
+                    <input type="file" name="profile_picture" placeholder="Upload Profile Picture" class="form-control" style="border: 1px solid  rgb(124, 123, 123);" />
+                </div>
+
+                <div class="text-center">
+                    <input type="submit" class="btn btn-primary" value="Create Profile" />
+                </div>
+                
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

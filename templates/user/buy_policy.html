@@ -1,0 +1,90 @@
+{% extends 'user/user_lay.html' %}
+{% block content %}
+<div class="container mt-5" style="margin-top: 7%;">
+    <h2 class="text-center" style="color: #002F6C;"><b>Buy Policy - {{ sub_policy.polcy_name }}</b></h2>
+
+    <form method="post">
+        {% csrf_token %}
+        
+        <!-- Step 1: Personal Details -->
+        <div id="step1">
+            <h4>Step 1: Personal Details</h4>
+            <div class="mb-3">
+                <label>Name:</label>
+                <input type="text" name="name" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label>Phone:</label>
+                <input type="tel" id="phone" name="phone" class="form-control" required>
+                <small id="phone-error" style="color: red;"></small>
+            </div>
+            <div class="mb-3">
+                <label>Email:</label>
+                <input type="email" name="email" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label>Address:</label>
+                <textarea name="address" class="form-control" required></textarea>
+            </div>
+            <button type="button" class="btn btn-primary" onclick="nextStep(2)">Next</button>
+        </div>
+
+        <!-- Step 2: Nominee Details -->
+        <div id="step2" style="display: none;">
+            <h4>Step 2: Nominee Details</h4>
+            <div class="mb-3">
+                <label>Nominee Name:</label>
+                <input type="text" name="nominee_name" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label>Relation:</label>
+                <input type="text" name="nominee_relation" class="form-control" required>
+            </div>
+            <button type="button" class="btn btn-secondary" onclick="prevStep(1)">Back</button>
+            <button type="button" class="btn btn-primary" onclick="nextStep(3)">Next</button>
+        </div>
+
+        <!-- Step 3: Payment Details -->
+        <div id="step3" style="display: none;">
+            <h4>Step 3: Payment Details</h4>
+            <div class="mb-3">
+                <label>Payment Method:</label>
+                <select name="payment_method" class="form-control" required>
+                    <option value="Google Pay">Google Pay</option>
+                    <option value="PhonePe">PhonePe</option>
+                    <option value="Paytm">Paytm</option>
+                </select>
+            </div>
+      
+            <button type="button" class="btn btn-secondary" onclick="prevStep(2)">Back</button>
+            <button type="submit" class="btn btn-success">Complete Purchase</button>
+        </div>
+    </form>
+</div>
+
+<script>
+    function nextStep(step) {
+        document.getElementById('step' + (step - 1)).style.display = 'none';
+        document.getElementById('step' + step).style.display = 'block';
+    }
+
+    function prevStep(step) {
+        document.getElementById('step' + (step + 1)).style.display = 'none';
+        document.getElementById('step' + step).style.display = 'block';
+    }
+</script>
+
+<script>
+    document.getElementById("phone").addEventListener("input", function() {
+        let phone = this.value;
+        let errorMsg = document.getElementById("phone-error");
+    
+        if (!/^\d{10}$/.test(phone)) {
+            errorMsg.textContent = "Phone number must be exactly 10 digits.";
+        } else {
+            errorMsg.textContent = "";
+        }
+    });
+    </script>
+    
+{% endblock %}

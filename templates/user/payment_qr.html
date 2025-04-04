@@ -1,0 +1,11 @@
+{% extends 'user/user_lay.html' %}
+{% block content %}
+<div class="container text-center mt-5">
+    <h2 style="color: #002F6C;"><b>Scan QR Code to Pay</b></h2>
+    <p>Policy: <b>{{ purchase.policy.policy_name }}</b></p>
+    <p>Amount: <b>₹{{ purchase.total_amount }}</b></p>
+    <img src="data:image/png;base64,{{ qr_image }}" alt="QR Code" class="img-fluid" style="max-width: 300px;">
+    <br><br>
+    <a href="{% url 'confirm_payment' purchase.id %}" class="btn btn-success">Confirm Payment</a>
+</div>
+{% endblock %}

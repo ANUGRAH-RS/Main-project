@@ -1,0 +1,66 @@
+{% extends 'agent/agent_lay.html' %}
+
+
+{% block content %}
+
+
+    <style>
+    
+
+        h2 {
+            color: #1e3c72;
+        }
+        input, textarea, select {
+            width: 90%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background: #1e3c72;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #2a5298;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Create Policy</h2>
+        {% if messages %}
+            {% for message in messages %}
+                <p class="error">{{ message }}</p>
+            {% endfor %}
+        {% endif %}
+
+        <form method="POST">
+            {% csrf_token %}
+            <input type="text" name="name" placeholder="Policy Name" required>
+            
+            <select name="policy_type" required>
+                <option value="">Select Policy Type</option>
+                <option value="health">Health Insurance</option>
+                <option value="life">Life Insurance</option>
+                <option value="vehicle">Vehicle Insurance</option>
+            </select>
+            
+            <textarea name="description" placeholder="Policy Description" required></textarea>
+            
+            <input type="number" name="premium_amount" placeholder="Premium Amount" required>
+            <input type="number" name="duration_months" placeholder="Duration (Months)" required>
+
+            <button type="submit">Create Policy</button>
+        </form>
+    </div>
+
+
+{% endblock %}

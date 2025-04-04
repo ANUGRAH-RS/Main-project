@@ -1,0 +1,78 @@
+{% extends 'user/user_lay.html' %}
+{% load static %}
+{% block content %}
+
+<div class="container mt-5" style="margin-top: 10%;">
+    <h3 class="text-center mb-4" style="margin-bottom: 30px;"><b style="color: rgb(4, 4, 59);">Your Purchased Policies</b></h3>
+
+    {% if purchases %}
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered shadow-lg">
+                <thead class="thead-dark">
+                    <tr class="text-center">
+                        <th>Sl No</th>
+                        <th>Policy Name</th>
+                        <th>Plan No</th>
+                        <th>UlN No</th>
+                        <th>Duration</th>
+                        <th>Total Amount</th>
+                        <th>Premium</th>
+                        <th>Start Date</th>
+                        <th>Expiry Date</th>
+                        <th>Status</th>
+                        <!-- <th>Actions</th> -->
+                        <th>Claim</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for purchase in purchases %}
+                    <tr class="text-center">
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ purchase.policy.polcy_name }}</td>
+                        <td>{{ purchase.policy_details.plan_no }}</td>
+<td>{{ purchase.policy_details.uin_no }}</td>
+                        
+                        <td>{{ purchase.duration_years }} years</td>
+                        <td>₹{{ purchase.total_amount }}</td>
+                        <td>₹{{ purchase.monthly_premium }}/month</td>
+                        <td>{{ purchase.start_date }}</td>
+                        <td>{{ purchase.expiry_date }}</td>
+                        <td>
+                            {% if purchase.is_active %}
+                                {% if purchase.payment_status %}
+                                    <span class="badge badge-success">Active</span>
+                                {% else %}
+                                    <span class="badge badge-warning">Payment Pending</span>
+                                {% endif %}
+                            {% else %}
+                                <span class="badge badge-danger">Expired</span>
+                            {% endif %}
+                        </td>
+                        <!-- <td>
+                            <div class="btn-group" role="group">
+                                <a href="{% url 'policy_details' purchase.id %}" class="btn btn-info btn-sm">
+                                    <i class="fas fa-info-circle"></i> Details
+                                </a>
+                                {% if purchase.is_active and purchase.payment_status %}
+                                    <a href="{% url 'renew_policy' purchase.id %}" class="btn btn-success btn-sm">
+                                        <i class="fas fa-sync-alt"></i> Renew
+                                    </a>
+                                {% endif %}
+                            </div>
+                        </td> -->
+                        <td>
+                            <a href="{% url 'submit_claim' purchase.id %}" class="btn btn-warning btn-sm">Submit Claim</a>
+                        </td>                        
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <div class="alert alert-warning text-center mt-4" role="alert">
+            You have not purchased any policies yet.
+        </div>
+    {% endif %}
+</div>
+
+{% endblock %}

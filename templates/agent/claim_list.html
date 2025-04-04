@@ -1,0 +1,74 @@
+{% extends 'agent/agent_lay.html' %}
+
+{% block content %}
+<div class="container-fluid">
+    <h3 class="mt-4"><b style="color: rgb(21, 0, 44);">Insurance Claims</b></h3>
+    
+    <div class="card mb-4">
+        <div class="card-header">
+            <i class="fas fa-table mr-1"></i>
+            All Claims
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Claim ID</th>
+                            <th>User</th>
+                            <th>Policy</th>
+                            <th>Plan No</th>
+                            <th>UIN No</th>
+                            <th>Claim Amount</th>
+                            <th>Monthly Premium</th>
+                            <th>Reason</th>
+                            <th>Status</th>
+                            <th>Created At</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for claim in claims %}
+                        <tr>
+                            <td>{{ claim.id }}</td>
+                            <td>{{ claim.user.username }}</td>
+                            <td>{{ claim.policy.policy.polcy_name }}</td>
+                            <td>{{ claim.plan_no }}</td>
+                            <td>{{ claim.uin_no }}</td>
+                            <td>₹{{ claim.claim_amount }}</td>
+                            <td>₹{{ claim.monthly_premium }}</td>
+                            <td>{{ claim.reason|truncatechars:50 }}</td>
+                            <td>
+                                <span class="badge 
+                                    {% if claim.status == 'Approved' %}bg-success
+                                    {% elif claim.status == 'Rejected' %}bg-danger
+                                    {% else %}bg-warning{% endif %}">
+                                    {{ claim.status }}
+                                </span>
+                            </td>
+                            <td>{{ claim.created_at|date:"Y-m-d H:i" }}</td>
+                            <td>
+                                <form method="post" action="{% url 'update_claim_status' claim.id %}">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="status" value="Approved">
+                                    <button type="submit" class="btn btn-success btn-sm">Approve</button>
+                                </form>
+                                <form method="post" action="{% url 'update_claim_status' claim.id %}">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="status" value="Rejected">
+                                    <button type="submit" class="btn btn-danger btn-sm">Reject</button>
+                                </form>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="11" class="text-center">No claims found.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

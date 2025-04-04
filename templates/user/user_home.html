@@ -1,0 +1,559 @@
+{% extends 'user/user_lay.html' %}
+{% load static %}
+{% block content %}
+    
+
+
+    <div id="page-content" style="margin-top: 70px;">
+        <section class="flexslider">
+            <ul class="slides">
+                <li>
+                    <img src="{% static 'user/images/slider-img2.jpg' %}" />
+                    <div class="slide-info">
+                        <div class="slide-con">
+                            <b>Healthcare</b>
+                            <h3>Health Insurance</h3>
+                            <p>Health insurance is a contract where an insurer (like an insurance company) agrees to cover a portion of your medical expenses in exchange for regular premiums, offering financial protection against healthcare costs. </p>
+                            <a href="#" class="ti-arrow-right"></a>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <img src="{% static 'user/images/slider-img1.jpg' %}" />
+                    <div class="slide-info">
+                        <div class="slide-con">
+                            <b>Lifecare</b>
+                            <h3>Life Insurance</h3>
+                            <p>Life insurance is a contract where an insurance company promises to pay a sum of money (the death benefit) to designated beneficiaries upon the policyholder's death, in exchange for regular premium payments. </p>
+                            <a href="#" class="ti-arrow-right"></a>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <img src="{% static 'user/images/slider-img.jpg' %}" />
+                    <div class="slide-info">
+                        <div class="slide-con">
+                            <b>Lifecare</b>
+                            <h3>Jeevan Rakshak Insurance</h3>
+                            <p>LIC's Jeevan Rakshak Plan is a participating non-linked plan which offers a combination of protection and savings</p>
+                            <a href="#" class="ti-arrow-right"></a>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </section>
+        <div class="container">
+            <div class="row">
+                <section class="col-sm-7 col-md-8 col-lg-8">
+                    <div class="intro">
+                        <h2>Welcome to Insurance press</h2>
+                        <p>Welcome to our insurance press description! We're here to provide you with the latest news, insights, and information about the insurance industry, focusing on both general and specific areas of insurance. </p>
+                        <ul class="row">
+                            <li class="col-sm-4">
+                                <i class="fa fa-life-ring"></i>
+                                <h3>27x7 Support</h3>
+                                <p>Life Insurance</p>
+                            </li>
+                            <li class="col-sm-4">
+                                <i class="ti-marker-alt"></i>
+                                <h3>Easy Claim system</h3>
+                                <p>streamlined and simplified process for submitting and processing claims.</p>
+                            </li>
+                            <li class="col-sm-4">
+                                <i class="ti-email"></i>
+                                <h3>Get Started with us</h3>
+                                <p>Provides lifelong coverage and a death benefit, with options for guaranteed annual payouts and additions. </p>
+                            </li>
+                        </ul>
+                    </div>
+                </section>
+                <!-- <section class="col-sm-5 col-md-4 col-lg-4">
+                    <div class="get-quote-form">
+                        <h2>Get a free quote form</h2>
+                        <form id="get-quote">
+                            <div>
+                                <input type="text" name="name" placeholder="Your Name" />
+                            </div>
+                            <div>
+                                <input type="text" name="email" placeholder="Email" />
+                            </div>
+                            <div>
+                                <input type="text" name="ph-no" placeholder="Phone no" />
+                            </div>
+                            <div class="form-select">
+                                <span></span>
+                                <select>
+                                    <option>Product</option>
+                                </select>
+                            </div>
+                            <div>
+                                <textarea rows="1" cols="1" placeholder="Message"></textarea>
+                            </div>
+                            <div class="text-center">
+                                <input type="submit" class="btn-default" value="Get Free Quote" />
+                            </div>
+                        </form>
+                    </div>
+                </section> -->
+            </div>
+        </div>
+
+        <section class="container policy-cards">
+            <div class="row">
+                <h2 class="text-center">Our Insurance Policies</h2>
+                {% for policy in policies %}
+                <div class="col-sm-4 col-md-4 col-lg-4">
+                    <div class="card policy-card" style="background: linear-gradient(135deg, 
+                        {% cycle '#6a11cb' '#2193b0' '#cc2b5e' '#f45c43' '#8e2de2' '#4b6cb7' as cardcolors %}, 
+                        {% cycle '#2575fc' '#6dd5ed' '#753a88' '#ee9ca7' '#a8ff78' '#182848' %}); 
+                        margin-bottom: 20px; color: white;">
+                        <div class="card-body">
+                            <div class="policy-icon">
+                                <i class="{% cycle 'fa fa-home' 'fa fa-plane' 'fa fa-heart' 'fa fa-car' 'fa fa-umbrella' 'fa fa-shield' %}"></i>
+                            </div>
+                            <h3 class="card-title">{{ policy.polcy_name }}</h3>
+                            
+                            <!-- Sub-policies section - initially hidden -->
+                            <div class="sub-policies">
+                                <h4>Available Plans:</h4>
+                                <ul class="list-group">
+                                    {% for sub_policy in policy.sub_policies.all %}
+                                    <li class="list-group-item">
+                                        {{ sub_policy.polcy_name }}
+                                    </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                            <!-- Direct buy button -->
+                            <a href="{% url 'pol' %}" 
+                            class="btn btn-light mt-2" style="margin-bottom: 20px;margin-left: 130px;">View</a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+    
+
+
+        <section class="product-tab">
+            <div class="container">
+                <div class="row">
+                    <div id="parentVerticalTab">
+                        <h2>Products</h2>
+                        <ul class="resp-tabs-list hor_1 col-sm-3 col-md-3 col-lg-3">
+                            <li><i class="ti-home"></i> Jeevan Rakshak Insurance</li>
+                            <li><i class="fa fa-plane"></i> Amritbaal Insurance</li>
+                            <li><i class="ti-heart-broken"></i> Life Insurance</li>
+                            <li><i class="ti-car"></i> Bima Jyoti Insurance</li>
+                        </ul>
+                        <div class="col-sm-5 col-md-5 col-lg-5 resp-tabs-container hor_1">
+                            <div>
+                                <div class="prod-tab-content">
+                                    <h4>
+                                        <span class="prod-cion"><i class="ti-home"></i></span>
+                                        Jeevan Rakshak Insurance
+                                    </h4>
+                                    <p>Jeevan Rakshak Insurance provides comprehensive child protection plans, ensuring financial security for your child's future needs.</p>
+                                    <p>It provides maturity benefits along with life protection to ensure long-term stability. </p>
+                                    <p class="tel">
+                                        <i class="fa fa-phone"></i> +91-022 6827 6827 <span>Toll Free</span>
+                                    </p>
+                                    <!-- <p>
+                                        <a class="btn-default" href="product-houseinsurance.html">Get Free Quote</a>
+                                    </p> -->
+                                </div>
+                                <img src="images/product-img.jpg" alt="" class="img-responsive" />
+                            </div>
+                            <div>
+                                <div class="prod-tab-content">
+                                    <h4>
+                                        <span class="prod-cion"><i class="fa fa-plane"></i></span>
+                                        Amritbaal Insurance
+                                    </h4>
+                                    <p>Amritbaal Insurance is a child-focused plan that secures their education and milestones through guaranteed payouts.</p>
+                                    <p>It combines savings with insurance to build a corpus for your child's needs. </p>
+                                    <p class="tel">
+                                        <i class="fa fa-phone"></i> +91-022 6827 6827 <span>Toll Free</span>
+                                    </p>
+                                    <!-- <p>
+                                        <a class="btn-default" href="#">Get Free Quote</a>
+                                    </p> -->
+                                </div>
+                                <img src="images/1.jpg" alt="" class="img-responsive" />
+                            </div>
+                            <div>
+                                <div class="prod-tab-content">
+                                    <h4>
+                                        <span class="prod-cion"><i class="ti-heart-broken"></i></span>
+                                        Life Insurance
+                                    </h4>
+                                    <p>Life Insurance provides essential financial protection to your loved ones in case of unforeseen events.</p>
+                                    <p>It ensures income replacement and debt clearance for dependents. </p>
+                                    <p class="tel">
+                                        <i class="fa fa-phone"></i> +91-022 6827 6827 <span>Toll Free</span>
+                                    </p>
+                                    <!-- <p>
+                                        <a class="btn-default" href="#">Get Free Quote</a>
+                                    </p> -->
+                                </div>
+                                <img src="images/3.jpg" alt="" class="img-responsive" />
+                            </div>
+                            <div>
+                                <div class="prod-tab-content">
+                                    <h4>
+                                        <span class="prod-cion"><i class="ti-car"></i></span>
+                                        Bima Jyoti Insurance
+                                    </h4>
+                                    <p>Bima Jyoti Insurance is a savings-cum-protection plan offering guaranteed returns and life cover.</p>
+                                    <p> It helps achieve financial goals while securing your family's future. </p>
+                                    <p class="tel">
+                                        <i class="fa fa-phone"></i> +91-022 6827 6827 <span>Toll Free</span>
+                                    </p>
+                                    <!-- <p>
+                                        <a class="btn-default" href="#">Get Free Quote</a>
+                                    </p> -->
+                                </div>
+                                <img src="images/2.jpg" alt="" class="img-responsive" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- <section class="services">
+            <h2 class="text-center">Our Best Services</h2>
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-3 services-dtl">
+                        <span class="fa fa-life-bouy"></span>
+                        <h3>24x7 Support</h3>
+                        <p>Lorem ipsum dolor sit amet, consectetur</p>
+                    </div>
+                    <div class="col-sm-3 services-dtl">
+                        <span class="ti-pencil"></span>
+                        <h3>Easy Claim System</h3>
+                        <p>Lorem ipsum dolor sit amet, consectetur</p>
+                    </div>
+                    <div class="col-sm-3 services-dtl">
+                        <span class="ti-email"></span>
+                        <h3>Get Started With us</h3>
+                        <p>Lorem ipsum dolor sit amet, consectetur</p>
+                    </div>
+                    <div class="col-sm-3 services-dtl">
+                        <span class="fa fa-money"></span>
+                        <h3>Easy Installments</h3>
+                        <p>Lorem ipsum dolor sit amet, consectetur</p>
+                    </div>
+                    <div class="col-sm-3 services-dtl">
+                        <span class="ti-wallet"></span>
+                        <h3>Lorem Ipsum</h3>
+                        <p>Lorem ipsum dolor sit amet, consectetur</p>
+                    </div>
+                    <div class="col-sm-3 services-dtl">
+                        <span class="fa fa-laptop"></span>
+                        <h3>Online Account</h3>
+                        <p>Lorem ipsum dolor sit amet, consectetur</p>
+                    </div>
+                    <div class="col-sm-3 services-dtl">
+                        <span class="ti-lock"></span>
+                        <h3>Strongly Secure</h3>
+                        <p>Lorem ipsum dolor sit amet, consectetur</p>
+                    </div>
+                    <div class="col-sm-3 services-dtl">
+                        <span class="ti-book"></span>
+                        <h3>Understandable Terms</h3>
+                        <p>Lorem ipsum dolor sit amet, consectetur</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="testimonials">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-10 col-sm-offset-1">
+                        <h2 class="text-center">Know what people says</h2>
+                        <div class="testimonial-tab">
+                            <div class="testimonials-tab-list">
+                                <ul>
+                                    <li>
+                                        <a href="javascript:void(0);" data-tab="tab1"><img src="images/people-01.jpg" alt="Client" /></a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0);" data-tab="tab2"><img src="images/people-02.jpg" alt="Client" /></a>
+                                    </li>
+                                    <li class="active">
+                                        <a href="javascript:void(0);" data-tab="tab3"><img src="images/people-03.jpg" alt="Client" /></a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0);" data-tab="tab4"><img src="images/people-04.jpg" alt="Client" /></a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0);" data-tab="tab5"><img src="images/people-05.jpg" alt="Client" /></a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="testimonials-tab-content">
+                                <div class="clearfix testimonial-con" id="testimonial-tab1">
+                                    <h3>John<br /><span>Developer</span></h3>
+                                    <i class="fa fa-quote-left left-quote"></i>
+                                    <p class="col-sm-offset-1 col-sm-10">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam ante purus, aliquet ut urna id, blandit lobortis nisl. Phasellus varius velit sed placerat euismod. Duis nisi massa, pretium at luctus.</p>
+                                    <i class="fa fa-quote-right right-quote"></i>
+                                </div>
+                                <div class="clearfix testimonial-con" id="testimonial-tab2">
+                                    <h3>Roger<br /><span>Baseball Player</span></h3>
+                                    <i class="fa fa-quote-left left-quote"></i>
+                                    <p class="col-sm-offset-1 col-sm-10">Cras vitae justo eu tellus maximus rutrum. Vestibulum nibh nibh, varius nec vehicula sed, finibus in tortor. Aliquam dictum, ligula vel euismod eleifend, libero est elementum</p>
+                                    <i class="fa fa-quote-right right-quote"></i>
+                                </div>
+                                <div class="clearfix testimonial-con" id="testimonial-tab3">
+                                    <h3>Victoria<br /><span>CEO</span></h3>
+                                    <i class="fa fa-quote-left left-quote"></i>
+                                    <p class="col-sm-offset-1 col-sm-10">Vivamus faucibus magna vitae purus blandit, rutrum aliquam turpis bibendum. Ut sit amet sapien dolor. Integer eget orci id leo consectetur iaculis ut vitae neque. Interdum et malesuada fames ac ante ipsum primis in faucibus.</p>
+                                    <i class="fa fa-quote-right right-quote"></i>
+                                </div>
+                                <div class="clearfix testimonial-con" id="testimonial-tab4">
+                                    <h3>Liang<br /><span>Photographer</span></h3>
+                                    <i class="fa fa-quote-left left-quote"></i>
+                                    <p class="col-sm-offset-1 col-sm-10">Pellentesque feugiat suscipit quam, quis dignissim massa. Suspendisse potenti. Donec porta tempus ipsum id rhoncus. Aliquam hendrerit leo erat, non accumsan massa venenatis vitae.</p>
+                                    <i class="fa fa-quote-right right-quote"></i>
+                                </div>
+                                <div class="clearfix testimonial-con" id="testimonial-tab5">
+                                    <h3>Adam<br /><span>Student</span></h3>
+                                    <i class="fa fa-quote-left left-quote"></i>
+                                    <p class="col-sm-offset-1 col-sm-10">Vivamus faucibus magna vitae purus blandit, rutrum aliquam turpis bibendum. Ut sit amet sapien dolor. Integer eget orci id leo consectetur iaculis ut vitae neque.</p>
+                                    <i class="fa fa-quote-right right-quote"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="recent-news">
+            <h2 class="text-center">Recent News</h2>
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-6 col-md-3">
+                        <div class="news-sec-box">
+                            <span class="ti-pencil"></span>
+                            <h3><a href="#">Free Sound Effects for Games, Apps & UI</a></h3>
+                            <p>24 Dec 2015</p>
+                            <div class="news-by">
+                                <a href="#"><img src="{% static 'user/images/people-03.jpg' %}" /></a>
+                                <a href="#">By Linda</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-3">
+                        <div class="news-sec-box">
+                            <span class="ti-image"></span>
+                            <h3><a href="#">Free Sound Effects for Games, Apps & UI</a></h3>
+                            <p>24 Dec 2015</p>
+                            <div class="news-by">
+                                <a href="#"><img src="{% static 'user/images/people-03.jpg' %}" /></a>
+                                <a href="#">By Linda</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-3">
+                        <div class="news-sec-box">
+                            <span class="ti-comments"></span>
+                            <h3><a href="#">Free Sound Effects for Games, Apps & UI</a></h3>
+                            <p>24 Dec 2015</p>
+                            <div class="news-by">
+                                <a href="#"><img src="{% static 'user/images/people-03.jpg' %}" /></a>
+                                <a href="#">By Linda</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-3">
+                        <div class="news-sec-box">
+                            <span class="ti-control-play"></span>
+                            <h3><a href="#">Free Sound Effects for Games, Apps & UI</a></h3>
+                            <p>24 Dec 2015</p>
+                            <div class="news-by">
+                                <a href="#"><img src="{% static 'user/images/people-03.jpg' %}" /></a>
+                                <a href="#">By Linda</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="partners">
+            <div class="container">
+                <div class="row">
+                    <div class="parner-slider-mn">
+                        <div class="col-sm-3">
+                            <h2>
+                                <b>Insurance</b> Partners
+                            </h2>
+                        </div>
+                        <div class="col-sm-9">
+                            <div class="partner-slider owl-carousel">
+                                <div>
+                                    <div class="partner-logo">
+                                        <p><img src="{% static 'user/images/partner-logo-01.jpg' %}" alt="Partner" /></p>
+                                    </div>
+                                    <div class="partner-logo">
+                                        <p><img src="{% static 'user/images/partner-logo-04.jpg' %}" alt="Partner" /></p>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="partner-logo">
+                                        <p><img src="{% static 'user/images/partner-logo-02.jpg' %}" alt="Partner" /></p>
+                                    </div>
+                                    <div class="partner-logo">
+                                        <p><img src="{% static 'user/images/partner-logo-05.jpg' %}" alt="Partner" /></p>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="partner-logo">
+                                        <p><img src="{% static 'user/images/partner-logo-03.jpg' %}" alt="Partner" /></p>
+                                    </div>
+                                    <div class="partner-logo">
+                                        <p><img src="{% static 'user/images/partner-logo-06.jpg' %}" alt="Partner" /></p>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="partner-logo">
+                                        <p><img src="{% static 'user/images/partner-logo-04.jpg' %}" alt="Partner" /></p>
+                                    </div>
+                                    <div class="partner-logo">
+                                        <p><img src="{% static 'user/images/partner-logo-01.jpg' %}" alt="Partner" /></p>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="partner-logo">
+                                        <p><img src="{% static 'user/images/partner-logo-05.jpg' %}" alt="Partner" /></p>
+                                    </div>
+                                    <div class="partner-logo">
+                                        <p><img src="{% static 'user/images/partner-logo-02.jpg'%}" alt="Partner" /></p>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="partner-logo">
+                                        <p><img src="{% static 'user/images/partner-logo-06.jpg'%}" alt="Partner" /></p>
+                                    </div>
+                                    <div class="partner-logo">
+                                        <p><img src="{% static 'user/images/partner-logo-03.jpg'%}" alt="Partner" /></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+        </section> -->
+    </div>
+    <div class="clear"></div>
+
+
+    <style>
+        /* Policy Cards Styling */
+        .policy-cards {
+            padding: 50px 0;
+        }
+        
+        .policy-card {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            overflow: hidden;
+            position: relative;
+            min-height: 300px;
+        }
+        
+        .policy-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        }
+        
+        .policy-icon {
+            font-size: 20px;
+            margin-left: 10px;
+            margin-top: 10px;
+            margin-bottom: 20px;
+            opacity: 0.8;
+        }
+        
+        .policy-card .card-title {
+            font-weight: 600;
+            margin-left: 10px;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .policy-card .card-title:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background-color: rgba(255,255,255,0.5);
+        }
+        
+        /* Sub-policies styling */
+        .sub-policies {
+            margin: 15px 0;
+            padding: 15px;
+            border-radius: 5px;
+            background-color: rgba(255,255,255,0.2);
+        }
+        
+        .sub-policies .list-group-item {
+            border: none;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding: 8px 0;
+            background-color: transparent;
+            color: white;
+           
+        }
+        
+        .sub-policies .list-group-item:last-child {
+            border-bottom: none;
+        }
+        
+        .toggle-sub-policies {
+            width: 100%;
+            text-align: left;
+            position: relative;
+            background-color: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+        }
+        
+        .toggle-sub-policies:hover {
+            background-color: rgba(255,255,255,0.3);
+        }
+        
+        .toggle-sub-policies i {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            transition: all 0.3s ease;
+        }
+        
+        .btn-light {
+            background-color: rgba(255,255,255,0.9);
+            color: #333;
+            font-weight: 600;
+            margin-left: 10px;
+            margin-right: 30px;
+            margin-top: 20px;
+        }
+        
+        .btn-light:hover {
+            background-color: white;
+            color: #333;
+        }
+        </style>
+
+    {% endblock %}
